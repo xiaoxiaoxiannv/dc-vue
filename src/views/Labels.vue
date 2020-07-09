@@ -1,6 +1,10 @@
 <template>
-    <div>L
-        <Nav/>
+    <div>
+        <Layout>
+            <P>
+                L
+            </P>
+        </Layout>
     </div>
 </template>
 

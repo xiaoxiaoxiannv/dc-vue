@@ -11,16 +11,22 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component} from 'vue-property-decorator';
+  import {Component, Watch} from 'vue-property-decorator';
 
   @Component
   export default class Notes extends Vue {
     value = '';
+
+    @Watch('value')
+    onValueChanged(value: string) {
+      this.$emit('update:value', value);
+    }
   }
 </script>
 
 <style lang="scss" scoped>
     @import "~@/assets/style/helper.scss";
+
     .notes {
         font-size: 14px;
         background: rgb(245, 246, 248);

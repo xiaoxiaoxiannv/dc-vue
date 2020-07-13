@@ -22,7 +22,7 @@
 
 <script lang="ts">
   import Vue from 'vue';
-  import {Component,Prop} from 'vue-property-decorator';
+  import {Component, Prop} from 'vue-property-decorator';
 
   @Component
   export default class NumberPad extends Vue {
@@ -56,15 +56,18 @@
     clear() {
       this.output = '0';
     }
-    ok(){
-      this.$emit('update:value',this.output)
-      this.$emit('submit',this.output)
+
+    ok() {
+      this.$emit('update:value', this.output);
+      this.$emit('submit', this.output);
+      this.output = '0';
     }
   }
 </script>
 
 <style lang="scss" scoped>
     @import "~@/assets/style/helper.scss";
+
     .numberPad {
         .output {
             @extend %innerShadow;

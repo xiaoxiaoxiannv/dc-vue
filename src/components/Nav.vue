@@ -10,7 +10,7 @@
         </router-link>
         <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="statistics"/>
-            明细
+            统计
         </router-link>
     </nav>
 </template>

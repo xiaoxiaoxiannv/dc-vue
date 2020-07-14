@@ -75,6 +75,7 @@
             font-family: Consolas, monospace;
             padding: 5px 16px;
             text-align: right;
+            background: white;
         }
 
         .buttons {

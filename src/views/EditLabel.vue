@@ -40,17 +40,24 @@
         this.$router.replace('/404');
       }
     }
-    updateTag(name: string){
-      if(this.tag){
-        tagListModel.update(this.tag.id,name);
+
+    updateTag(name: string) {
+      if (this.tag) {
+        tagListModel.update(this.tag.id, name);
       }
     }
-    removeTag(){
-      if(this.tag){
-        tagListModel.remove(this.tag.id);
+
+    removeTag() {
+      if (this.tag) {
+        if (tagListModel.remove(this.tag.id)) {
+          this.$router.back();
+        } else {
+          window.alert('删除失败');
+        }
       }
     }
-    goBack(){
+
+    goBack() {
       this.$router.back();
     }
   }

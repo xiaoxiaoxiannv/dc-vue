@@ -48,8 +48,8 @@ const store = new Vuex.Store({
       store.commit('saveTag');
       window.alert('标签创建成功');
     },
-    updateTag(state, object: { id: string; name: string }) {
-      const {id, name} = object;
+    updateTag(state, payload: { id: string; name: string }) {
+      const {id, name} = payload;
       const idList = state.tagList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
         const names = state.tagList.map(item => item.name);

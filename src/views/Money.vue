@@ -8,7 +8,8 @@
 
         </div>
         <Tags/>
-        <Types :value.sync="record.type"/>
+        <Tabs :data-source="recordTypeList"
+              :value.sync="record.type"/>
     </Layout>
 </template>
 
@@ -19,14 +20,18 @@
   import Tags from '@/components/Money/Tags.vue';
   import Types from '@/components/Money/Types.vue';
   import {Component} from 'vue-property-decorator';
+  import recordTypeList from '@/constants/recordTypeList';
+  import Tabs from '@/components/Money/Tabs.vue';
 
   @Component({
-    components: {Types, Tags, FormItem, NumberPad}
+    components: {Tabs, Types, Tags, FormItem, NumberPad}
   })
   export default class Money extends Vue {
     get recordList() {
       return this.$store.state.recordList;
     }
+
+    recordTypeList = recordTypeList;
 
     record: RecordItem = {
       type: '-', tags: [], notes: '', amount: 0

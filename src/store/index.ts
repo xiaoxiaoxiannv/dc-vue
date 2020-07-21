@@ -20,12 +20,12 @@ const store = new Vuex.Store({
       const record2: RecordItem = clone(record);
       record2.createdAt = new Date().toISOString();
       state.recordList.push(record2);
-      console.log(state.recordList);
       store.commit('saveRecord');
     },
     saveRecord(state) {
       window.localStorage.setItem('recordList',
         JSON.stringify(state.recordList));
+      window.alert('保存成功')
     },
     fetchTag(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');

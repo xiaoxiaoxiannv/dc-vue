@@ -5,11 +5,16 @@ type RootState = {
 }
 type RecordItem = {
   type: string;
-  tags: string[];
+  tags: Tag[];
   notes: string;
   amount: number;
   createdAt?: string;
 }
+type Result = {
+  title: string;
+  total?: number;
+  items: RecordItem[];
+}[]
 type Tag = {
   id: string;
   name: string;

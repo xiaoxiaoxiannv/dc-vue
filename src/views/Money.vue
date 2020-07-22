@@ -4,10 +4,11 @@
         <div class="notes">
             <FormItem filed-name="备注"
                       placeholder="在这里输入备注"
-                      @update:value="onUpdateNotes"/>
+                      :value.sync="record.notes"
+            />
 
         </div>
-        <Tags/>
+        <Tags @update:value="record.tags = $event"/>
         <Tabs :data-source="recordTypeList"
               :value.sync="record.type"/>
     </Layout>
@@ -46,6 +47,10 @@
 
     saveRecord() {
       this.$store.commit('createRecord', this.record);
+      if (this.$store.state.createRecordError === null) {
+        window.alert('保存成功');
+        this.record.notes = '';
+      }
     }
   }
 </script>

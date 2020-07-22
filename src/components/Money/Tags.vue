@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-  import Vue from 'vue';
   import {Component} from 'vue-property-decorator';
   import {mixins} from 'vue-class-component';
   import {TagHelper} from '@/mixins/TagHelper';
@@ -26,6 +25,7 @@
     }
     created(){
       this.$store.commit('fetchTag')
+
     }
 
     toggle(tag: string) {

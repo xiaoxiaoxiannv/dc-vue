@@ -6,7 +6,13 @@
                       placeholder="在这里输入备注"
                       :value.sync="record.notes"
             />
-
+        </div>
+        <div class="createdAt">
+            <FormItem filed-name="日期"
+                      type="date"
+                      placeholder="在这里输入日期"
+                      :value.sync="record.createdAt"
+            />
         </div>
         <Tags @update:value="record.tags = $event"/>
         <Tabs :data-source="recordTypeList"
@@ -34,7 +40,7 @@
     recordTypeList = recordTypeList;
 
     record: RecordItem = {
-      type: '-', tags: [], notes: '', amount: 0
+      type: '-', tags: [], notes: '', amount: 0,createdAt: new Date().toISOString()
     };
 
     created() {
@@ -56,6 +62,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "~@/assets/style/helper.scss";
+
     ::v-deep .layout-content {
         display: flex;
         flex-direction: column-reverse;
@@ -63,6 +71,8 @@
 
     .notes {
         background: rgb(245, 246, 248);
-        padding: 12px 0;
+    }
+    .createdAt{
+        background: rgb(245, 246, 248);
     }
 </style>

@@ -31,10 +31,10 @@ const store = new Vuex.Store({
     fetchTag(state) {
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
       if (!state.tagList || state.tagList.length === 0) {
-        store.commit('createTag', '衣');
-        store.commit('createTag', '食');
-        store.commit('createTag', '住');
-        store.commit('createTag', '行');
+        store.commit('createTag', '吃饭');
+        store.commit('createTag', '交通');
+        store.commit('createTag', '红包');
+        store.commit('createTag', '工资');
       }
     },
     setCurrentTag(state, id: string) {

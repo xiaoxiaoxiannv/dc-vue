@@ -30,6 +30,8 @@
   import dayjs from 'dayjs';
   import clone from '@/lib/clone';
   import Chart from '@/components/Money/Chart.vue';
+  import lodash from 'lodash';
+  import day from 'dayjs';
 
   const oneDay = 86400 * 1000;
 
@@ -41,45 +43,9 @@
       return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
     }
 
-    get x() {
-      return {
-        grid:{
-          left:0,
-          right:0
-        },
-        xAxis: {
-          type: 'category',
-          data: [
-            '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-            '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-            '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ],
-          axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle:{color: 'rgb(164,180,207)'}}
-        },
-        yAxis: {
-          type: 'value',
-          show: false
-        },
-        series: [{
-          symbol: 'circle',
-          symbolSize: 10,
-          itemStyle:{borderWidth:1,color: 'rgb(164,180,207)',borderColor:'rgb(164,180,207)'},
-          data: [
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320,
-            820, 932, 901, 934, 1290, 1330, 1320, 1, 2
-          ],
-          type: 'line'
-        }],
-        tooltip: {
-          show: true,
-          triggerOn: 'click',
-          position: 'top',
-          formatter: '{c}'
-        }
-      };
+    mounted() {
+      const div = (this.$refs.chartWrapper as HTMLDivElement);
+      div.scrollLeft = div.scrollWidth;
     }
 
     beautify(string: string) {
@@ -97,6 +63,66 @@
         return day.format('YYYY年MM月DD日');
       }
     }
+
+    get y() {
+      const today = new Date();
+      const array = [];
+      for (let i = 0; i <= 29; i++) {
+        const dateString = day(today)
+          .subtract(i, 'day').format('YYYY-MM-DD');
+        const found = lodash.find(this.recordList, {
+          createdAt: dateString});
+        array.push({
+          date: dateString, value: found ? found.amount : 0
+        });
+      }
+      console.log(array);
+      array.sort((a, b) => {
+        if (a.date > b.date) {
+          return 1;
+        } else if (a.date === b.date) {
+          return 0;
+        } else {
+          return -1;
+        }
+      });
+      return array;
+    }
+
+    get x() {
+       const keys = this.y.map(item => item.date);
+       const values = this.y.map(item => item.value);
+      return {
+        grid: {
+          left: 0,
+          right: 0
+        },
+        xAxis: {
+          type: 'category',
+          data: keys,
+          axisTick: {alignWithLabel: true},
+          axisLine: {lineStyle: {color: 'rgb(164,180,207)'}}
+        },
+        yAxis: {
+          type: 'value',
+          show: false
+        },
+        series: [{
+          symbol: 'circle',
+          symbolSize: 10,
+          itemStyle: {borderWidth: 1, color: 'rgb(164,180,207)', borderColor: 'rgb(164,180,207)'},
+          data: values,
+          type: 'line'
+        }],
+        tooltip: {
+          show: true,
+          triggerOn: 'click',
+          position: 'top',
+          formatter: '{c}'
+        }
+      };
+    }
+
 
     get recordList() {
       return (this.$store.state as RootState).recordList;
@@ -168,11 +194,14 @@
         margin-left: 16px;
         color: #999;
     }
-    .chart{
-        width:430%;
-        &-wrapper{
+
+    .chart {
+        width: 430%;
+
+        &-wrapper {
             overflow: auto;
-            &::-webkit-scrollbar{
+
+            &::-webkit-scrollbar {
                 display: none;
             }
         }

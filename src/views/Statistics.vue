@@ -1,7 +1,9 @@
 <template>
     <Layout>
         <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-        <Chart :options="x"/>
+        <div class="chart-wrapper" ref="chartWrapper">
+            <Chart class="chart" :options="x"/>
+        </div>
         <ol v-if="groupedList.length>0">
             <li v-for="(group,index) in groupedList" :key="index">
                 <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
@@ -38,20 +40,31 @@
     tagString(tags: Tag[]) {
       return tags.length === 0 ? '无' : tags.map(t => t.name).join('，');
     }
-    get x(){
+
+    get x() {
       return {
+        grid:{
+          left:0,
+          right:0
+        },
         xAxis: {
           type: 'category',
           data: [
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
             '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
             '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-          ]
+          ],
+          axisTick: {alignWithLabel: true},
+          axisLine: {lineStyle:{color: 'rgb(164,180,207)'}}
         },
         yAxis: {
-          type: 'value'
+          type: 'value',
+          show: false
         },
         series: [{
+          symbol: 'circle',
+          symbolSize: 10,
+          itemStyle:{borderWidth:1,color: 'rgb(164,180,207)',borderColor:'rgb(164,180,207)'},
           data: [
             820, 932, 901, 934, 1290, 1330, 1320,
             820, 932, 901, 934, 1290, 1330, 1320,
@@ -60,8 +73,13 @@
           ],
           type: 'line'
         }],
-        tooltip: {show: true}
-      }
+        tooltip: {
+          show: true,
+          triggerOn: 'click',
+          position: 'top',
+          formatter: '{c}'
+        }
+      };
     }
 
     beautify(string: string) {
@@ -149,5 +167,14 @@
         margin-right: auto;
         margin-left: 16px;
         color: #999;
+    }
+    .chart{
+        width:430%;
+        &-wrapper{
+            overflow: auto;
+            &::-webkit-scrollbar{
+                display: none;
+            }
+        }
     }
 </style>

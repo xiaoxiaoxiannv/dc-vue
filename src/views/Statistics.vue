@@ -76,7 +76,6 @@
           date: dateString, value: found ? found.amount : 0
         });
       }
-      console.log(array);
       array.sort((a, b) => {
         if (a.date > b.date) {
           return 1;
@@ -101,7 +100,12 @@
           type: 'category',
           data: keys,
           axisTick: {alignWithLabel: true},
-          axisLine: {lineStyle: {color: 'rgb(164,180,207)'}}
+          axisLine: {lineStyle: {color: 'rgb(164,180,207)'}},
+          axisLabel: {
+            formatter: function (value: string) {
+                return value.substr(5)
+            }
+          }
         },
         yAxis: {
           type: 'value',
